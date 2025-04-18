@@ -6,8 +6,10 @@ services:
     container_name: mysql-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: your-db-password
+      MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: voting_app
+      MYSQL_USER: voteuser
+      MYSQL_PASSWORD: votepassword
     ports:
       - "3306:3306"
     volumes:
@@ -21,8 +23,8 @@ services:
       - "5001:5001"
     environment:
       DB_HOST: db
-      DB_USER: root
-      DB_PASSWORD: your-db-password
+      DB_USER: voteuser
+      DB_PASSWORD: votepassword
       DB_NAME: voting_app
     depends_on:
       - db
