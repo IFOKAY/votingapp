@@ -1,9 +1,50 @@
-env:
-  - name: DB_HOST
-    value: mysql
-  - name: DB_USER
-    value: voteuser
-  - name: DB_PASSWORD
-    value: votepassword
-  - name: DB_NAME
-    value: voting_app
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-voting-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-voting-app
+  template:
+    metadata:
+      labels:
+        app: flask-voting-app
+    spec:
+      containers:
+      - name: flask-voting-app
+        image: flask-voting-app:latest
+        ports:
+        - containerPort: 5001
+        env:
+        - name: DB_HOST
+          value: mysql
+        - name: DB_USER
+          value: voteuser
+        - name: DB_PASSWORD
+          value: votepassword
+        - name: DB_NAME
+          value: voting_app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-voting-app
+spec:
+  selector:
+    app: flask-voting-app
+  ports:
+    - port: 5001
+      targetPort: 5001
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: flask-voting-app
+spec:
+  to:
+    kind: Service
+    name: flask-voting-app
+  port:
+    targetPort: 5001
