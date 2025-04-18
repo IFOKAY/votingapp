@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><title>Vote</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Vote for your favorite team</h2>
+    <form method="POST">
+        <input type="radio" name="team" value="Team A" required> Team A<br/>
+        <input type="radio" name="team" value="Team B"> Team B<br/>
+        <input type="submit" value="Vote">
+    </form>
+    <a href="/results">See Results</a><br/>
+    <a href="/logout">Logout</a>
+</body>
+</html>
