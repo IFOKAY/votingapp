@@ -1,0 +1,9 @@
+env:
+  - name: DB_HOST
+    value: mysql
+  - name: DB_USER
+    value: voteuser
+  - name: DB_PASSWORD
+    value: votepassword
+  - name: DB_NAME
+    value: voting_app
