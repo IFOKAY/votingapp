@@ -11,11 +11,12 @@ DB_USER = os.getenv('DB_USER', 'voteuser')  # Default to 'voteuser'
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'votepassword')  # Default to 'votepassword'
 DB_NAME = os.getenv('DB_NAME', 'voting_app')  # Default to 'voting_app'
 
-# Retry logic for database connection
+# Retry logic for database connection with more logging
 def get_db_connection():
     attempts = 0
     while attempts < 5:
         try:
+            print(f"Attempt {attempts + 1} to connect to MySQL at {DB_HOST}:3306...")
             # Attempt to connect to the database
             conn = mysql.connector.connect(
                 host=DB_HOST,
@@ -23,6 +24,7 @@ def get_db_connection():
                 password=DB_PASSWORD,
                 database=DB_NAME
             )
+            print(f"Successfully connected to MySQL at {DB_HOST}:3306")
             return conn
         except mysql.connector.errors.DatabaseError as e:
             print(f"Attempt {attempts + 1}: Database connection failed - {e}")
